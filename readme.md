@@ -12,7 +12,7 @@ Assuming you're on a Windows machine, you'll need something with Powershell and 
 Here's the source for the module installer:
 https://blogs.technet.microsoft.com/ashleymcglone/2016/02/26/install-the-active-directory-powershell-module-on-windows-10/
 
-Once you have that module set up, you can query your current Active Directory domain for users. The Python script is going to invoke the powershell script to checke verybody.
+Once you have that module set up, you can query your current Active Directory domain for users. The Python script is going to invoke the powershell script to check everybody.
 
 Now all you need is a Python environment with the slackclient package installed (pip install slackclient).
 
