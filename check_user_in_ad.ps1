@@ -2,4 +2,4 @@
 Import-Module activedirectory
 $emailToCheck = [string]$args[0]
 $acct = Get-ADUser -filter {userPrincipalName -like $emailToCheck}
-If($acct) { Exit 0 } Else { Exit 1 }
+If($acct -and $acct.Enabled) { Exit 0 } Else { Exit 1 }

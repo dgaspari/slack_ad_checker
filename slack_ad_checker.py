@@ -29,8 +29,9 @@ results = sc.api_call('users.list')
 userlist = results.get('members')
 
 for user in userlist:
-    useremail = user.get('profile').get('email')
-    if useremail is not None:
-        #just prints to console if email not there
-        is_email_in_ad(useremail)
-        time.sleep(5)
+    if not user.get('is_bot') and not user.get('deleted'):
+        useremail = user.get('profile').get('email')
+        if useremail is not None:
+            #just prints to console if email not there
+            is_email_in_ad(useremail)
+            time.sleep(3)
