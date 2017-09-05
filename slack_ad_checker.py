@@ -34,4 +34,4 @@ for user in userlist:
         if useremail is not None:
             #just prints to console if email not there
             is_email_in_ad(useremail)
-            time.sleep(3)
+            time.sleep(1)
