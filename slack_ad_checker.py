@@ -11,7 +11,7 @@ def is_email_in_ad(user_email):
                                  'Unrestricted',
                                  './check_user_in_ad.ps1',
                                  user_email], cwd=os.getcwd())
-                                 
+
     result = psxmlgen.wait()
     if result is 1:
         print('This email does not exist in AD: ' + user_email)
