@@ -5,13 +5,14 @@ import subprocess
 import sys
 import time
 
-def is_email_in_ad(user_email):
+def is_email_in_ad(user_email, user_name):
     psxmlgen = subprocess.Popen([r'C:\WINDOWS\system32\WindowsPowerShell\v1.0\powershell.exe',
                                  '-ExecutionPolicy',
                                  'Unrestricted',
                                  './check_user_in_ad.ps1',
-                                 user_email], cwd=os.getcwd())
-
+                                 user_email,
+                                 user_name.encode('ascii', 'ignore').replace("'", "''")], cwd=os.getcwd())
+                                 
     result = psxmlgen.wait()
     if result is 1:
         print('This email does not exist in AD: ' + user_email)
@@ -31,7 +32,10 @@ userlist = results.get('members')
 for user in userlist:
     if not user.get('is_bot') and not user.get('deleted'):
         useremail = user.get('profile').get('email')
+        username = user.get('profile').get('real_name_normalized')
+        if username is None:
+            username = '.'
         if useremail is not None:
             #just prints to console if email not there
-            is_email_in_ad(useremail)
+            is_email_in_ad(useremail, username)
             time.sleep(1)
