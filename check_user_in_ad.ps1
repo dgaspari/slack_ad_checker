@@ -11,10 +11,16 @@ If($acct -and $acct.Enabled) {
     If($emailAcct -and $emailAcct.Enabled) { Exit 0 } Else {
         If($userFirstName -ne $null -and $userLastName -ne $null) {
             $userName = $userFirstName + " " + $userLastName
+            $userFirstNameWildCard = $userFirstName + "*"
             $adAcct = Get-ADUser -filter {name -like $userName} -Properties proxyAddresses
             If($adAcct -and $adAcct.Enabled) {
                 $smtpAddress = "smtp:" + $emailToCheck
                 If($adAcct.proxyAddresses -contains $smtpAddress) { Exit 0 }
+            }
+            $altAdAcct = Get-ADUser -filter {(name -like $userFirstNameWildCard) -And (surname -eq $userLastName)} -Properties proxyAddresses
+            If($altAdAcct -and $altAdAcct.Enabled) {
+                $altSmtpAddress = "smtp:" + $emailToCheck
+                If($altAdAcct.proxyAddresses -contains $altSmtpAddress) { Exit 0 }
             }
         }
         Exit 1
